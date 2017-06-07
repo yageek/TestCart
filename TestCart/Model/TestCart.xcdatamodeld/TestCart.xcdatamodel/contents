@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Cart" representedClassName="Cart" syncable="YES" codeGenerationType="class">
+        <attribute name="lastUpdated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="currency" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrencyRate" inverseName="cart" inverseEntity="CurrencyRate" syncable="YES"/>
+        <relationship name="orders" toMany="YES" deletionRule="Cascade" destinationEntity="ProductOrder" inverseName="cart" inverseEntity="ProductOrder" syncable="YES"/>
+    </entity>
+    <entity name="CurrencyRate" representedClassName="CurrencyRate" syncable="YES" codeGenerationType="class">
+        <attribute name="identifier" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="usdRatio" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="currency" inverseEntity="Cart" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="identifier"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ProductDescription" representedClassName="ProductDescription" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="priceUSD" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProductOrder" inverseName="product" inverseEntity="ProductOrder" syncable="YES"/>
+    </entity>
+    <entity name="ProductOrder" representedClassName="ProductOrder" syncable="YES" codeGenerationType="class">
+        <relationship name="cart" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="orders" inverseEntity="Cart" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProductDescription" inverseName="orders" inverseEntity="ProductDescription" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Cart" positionX="-171" positionY="-171" width="128" height="28"/>
+        <element name="CurrencyRate" positionX="70" positionY="99" width="128" height="103"/>
+        <element name="ProductDescription" positionX="-315" positionY="-108" width="128" height="90"/>
+        <element name="ProductOrder" positionX="-101" positionY="27" width="128" height="75"/>
+    </elements>
+</model>
